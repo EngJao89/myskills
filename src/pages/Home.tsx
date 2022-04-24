@@ -11,14 +11,24 @@ import {
 import { Button } from '../components/Button';
 import { SkillCard } from '../components/SkillCard';
 
+interface SkillData {
+  id: string;
+  name: string;
+  date: Date;
+}
 
 export function Home(){
   const [newSkill, setNewSkill] = useState('');
-  const [mySkills, setMySkills] = useState([]);
+  const [mySkills, setMySkills] = useState<SkillData[]>([]);
   const [gretting, setGretting] = useState('');
 
   function handleAddNewSkill(){
-    setMySkills(oldState => [... oldState, newSkill]);
+    const data ={
+      id: String(new Date().getTime()),
+      name: newSkill,
+      date: new Date()
+    }
+    setMySkills(oldState => [... oldState, data]);
   }
 
   useEffect(() => {
@@ -69,7 +79,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 70,
-    paddingHorizontal: 30,
     backgroundColor: '#121015',
   },
   title: {
