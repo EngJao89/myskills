@@ -14,7 +14,6 @@ import { SkillCard } from '../components/SkillCard';
 interface SkillData {
   id: string;
   name: string;
-  date: Date;
 }
 
 export function Home(){
@@ -25,8 +24,7 @@ export function Home(){
   function handleAddNewSkill(){
     const data ={
       id: String(new Date().getTime()),
-      name: newSkill,
-      date: new Date()
+      name: newSkill
     }
     setMySkills(oldState => [... oldState, data]);
   }
@@ -57,7 +55,11 @@ export function Home(){
         onChangeText={setNewSkill}
       />
 
-      <Button onPress={handleAddNewSkill}/>
+      <Button 
+        title="Add"
+        onPress={handleAddNewSkill} 
+        activeOpacity={0.7}
+      />
 
       <Text style={[styles.title, { marginVertical: 50 }]}>
         My Skills
@@ -65,9 +67,9 @@ export function Home(){
 
       <FlatList 
         data={mySkills}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => 
-          <SkillCard skill={item} />
+          <SkillCard skill={item.name} />
         }
       />
     </View>
@@ -77,7 +79,7 @@ export function Home(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     paddingVertical: 70,
     backgroundColor: '#121015',
   },
